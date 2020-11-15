@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树组件</title>
+    <link rel="stylesheet" href="./zTree-zTree_v3-master/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">  
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <div id="rMenu" style="display: none">
+        <a href="#" class="list-group-item">增加同级</a>   
+        <a href="#" class="list-group-item">增加子集</a>   
+        <a href="#" class="list-group-item">删除</a>   
+        <a href="#" class="list-group-item">重命名</a>    
+    </div>
+</head>
+<body style="height: 2000px; overflow: hidden;">
+    <style>
+        *{ padding:0; margin:0;} 
+        div#rMenu {
+            position:absolute; 
+            visibility:hidden; 
+            top:0; 
+            text-align: left;
+            border: 1px solid gray;
+        }
+        div#rMenu a{
+            padding: 5px 10px 5px 10px;
+            background-color:white;
+            vertical-align:middle;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    <script type="text/javascript" src="./zTree-zTree_v3-master/zTree_v3/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="./zTree-zTree_v3-master/zTree_v3/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript">
+        /**简单数据格式时，必须设置下面的 data.simpleData.enable 为 true
+         * 标准数据格式时之所以没设值，因为它默认为 false */
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback:{
+                // 鼠标右击事件
+                onRightClick: onRightClick
+            }
+        };
+        /**简单数据格式*/
+        var zNodes =[
+            { id:1, pId:0, name:"车载摄像头", open:true, isParent:true},
+            { id:11, pId:1, name:"10路" , isParent:true},
+            { id:111, pId:11, name:"100路-20"},
+            { id:112, pId:11, name:"100路-21"},
+            { id:113, pId:11, name:"100路-22"},
+            { id:12, pId:1, name:"20路"},
+            { id:13, pId:1, name:"100路"},
+            { id:2, pId:0, name:"无人机" , isParent:true},
+            { id:21, pId:2, name:"无人机类型",  isParent:true},
+            { id:211, pId:21, name:"无人机飞艇"},
+            { id:212, pId:21, name:"扑翼无人机"},
+            { id:213, pId:21, name:"伞翼无人机"},
+            { id:3, pId:0, name:"配件", isParent:true},
+            { id:31, pId:3, name:"眼镜", open:true, isParent:true},
+            { id:311, pId:31, name:"黑框眼镜"},
+            { id:312, pId:31, name:"白框眼镜"},
+            { id:32, pId:3, name:"衣服", isParent:true},
+            { id:321, pId:32, name:"毛衣"},
+            { id:322, pId:32, name:"卫衣"},
+            { id:323, pId:32, name:"西装"},
+            { id:324, pId:32, name:"牛仔裤"},
+        ];
+        function onRightClick(event, treeId, treeNode) {
+            if(!treeNode.isParent){
+                showRMenu("root", event.clientX, event.clientY);
+            }
+        }
+        //显示右键菜单
+        function showRMenu(type, x, y) {
+            $("#rMenu").show();
+            $("#rMenu").css({"top": y + "px", "left": x + "px", "visibility": "visible"}); //设置右键菜单的位置、可见
+            $("body").bind("mousedown", onBodyMouseDown);
+        }
+
+        //隐藏右键菜单
+        function hideRMenu() {
+            $("#rMenu").css({"visibility": "hidden"}); //设置右键菜单不可见
+            $("body").unbind("mousedown", onBodyMouseDown);
+        }
+        //鼠标按下事件
+        function onBodyMouseDown(event) {
+            if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
+                // $("#rMenu").hide();
+                $("#rMenu").css({ "visibility": "hidden"});
+            }
+        }
+        $(document).ready(function(){
+            /**为容器初始化数据*/
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+        });
+        // 清除树节点的背景色
+        $("#treeDemo").removeClass("curSelectedNode");
+    </script>
+</body>
+</html>

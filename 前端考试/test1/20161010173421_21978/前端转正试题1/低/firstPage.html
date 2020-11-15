@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>首页</title>
     <div class="bg">
-
+        <div class="logo">
+        </div>
+        <div class="shadow">
+            <div class = "content">
+                <div class="name">用户名</div>
+                <div class="password">*******</div>
+                <button class="btn">登 录</button>
+            <div>
+        </div>
+        <div class= "detail">
+            <span>忘记密码?</span>
+            <button class="userPassword" id = "userPassword">用户密码</button>
+            <button class="login" id="login">PKI登录</button>
+        </div>
     </div>
 </head>
 <body>
@@ -14,8 +27,136 @@
     .bg {
         width: 100%;
         height: 1080px;
-        background-image: url("切图/bg.png");
+        background: url("切图/bg.png") no-repeat;
     }
+    .logo {
+        height: 235px;
+        background: url("切图/logo.png") no-repeat;
+        position: relative;
+        top: 6%;
+        left: 35%;
+    }
+    .shadow {
+        width: 733px;
+        height: 81px;
+        border: 1px solid #6e6184;
+        position: absolute;
+        top: 341px;
+        left: 230px;
+        border-radius: 5px 5px 0 0;
+        background: rgba(142,141,186,0.33);
+    }
+    .name {
+        width: 254px;
+        height: 33px;
+        position: absolute;
+        top: 16px;
+        left: 18px;
+        background-color: #3c3e56;
+        color: #9695A3;
+        padding-top: 10px;
+        padding-left: 16px;
+        display: inline-block;
+        border: 1px solid #6A6979;
+        border-radius: 5px;
+    }
+    .name:hover {
+        background-color: rgba(255,255,255,0.2);
+        color: white;
+    }
+    .password {
+        display: inline-block;
+        width: 254px;
+        height: 33px;
+        position: absolute;
+        top: 16px;
+        left: 304px;
+        background-color: rgba(255,255,255,0.1);
+        color: #9695A3;
+        padding-top: 10px;
+        padding-left: 16px;
+        border: 1px solid #6A6979;
+        border-radius: 5px;
+    }
+    .btn {
+        width: 135px;
+        height: 43px;
+        position: absolute;
+        top: 16px;
+        left: 587px;
+        background-color: #3c3e56;
+        color: white;
+        font-size: 16px;
+        line-height: 43px;
+        background-color: #41ACFC;
+        border-radius: 5px;
+        outline: none;  
+    }
+    .detail {
+        width: 733px;
+        height: 30px;
+        background-color: rgba(77,76,143,0.15);
+        position: absolute;
+        top: 82px;
+        border-bottom: 1px solid #6e6184;
+        border-left: 1px solid #6e6184;
+        border-right: 1px solid #6e6184;
+        left: -1px;
+    }
+    .detail span{
+        font-size: 14px;
+        color: #9695A3;
+        margin-left: 21px;
+        line-height: 29px;
+        text-decoration: underline;
+    }
+    .detail span:hover {
+        color: white;
+    }
+    .userPassword {
+        position: relative;
+        left: 500px;
+        width: 69px;
+        background-color: #5F6075;
+        color: white;
+        border-radius: 2px;
+        border: 1px solid #23212E;
+        outline: none;  
+    }
+    .login {
+        position: relative;
+        width: 69px;
+        left: 494px;
+        color: #9695A3;
+        background: transparent;
+        border-radius: 2px;
+        border: 1px solid #23212E;
+        outline: none;  
+    }
+    /* .login:hover {
+        color: #369DFA;
+        border: 1px solid #23212E;
+    } */
 </style>
+<script>
+    var change = document.getElementById("login")
+    var userPassword = document.getElementById("userPassword")
+    change.onclick = function(){
+        console.log("1")
+        change.style.backgroundColor = "#369DFA"
+        change.style.color = "white"
+        userPassword.style.backgroundColor="transparent"
+        userPassword.style.color = "#9695A3"
+    }
+    change.onmouseover = function() {
+        change.style.color = "#369DFA"
+    }
+    change.onmouseleave = function(){
+        change.style.backgroundColor = "transparent"
+        userPassword.style.backgroundColor = "#5F6075"
+        userPassword.style.color = "white"
+        change.style.color = "#9695A3"
+    }
+</script>
 </body>
 </html>
