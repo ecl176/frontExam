@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./fh-ui@2.2/css/fh-ui.min.css" rel="stylesheet">
+    <link href="./info.css" rel="stylesheet">
+    <script src="./fh-ui@2.2/js/lib/template/template.min.js" ></script>
+    <div class="personInfor">
+        <div class="title">
+            <span class="search">搜查关系</span>
+            <span class="detail">(最多可查两人之间的关系)</span>
+            <span class="symbol">></span>
+        </div>
+        <div class="introduce">
+            <span>输入人员信息</span>
+        </div>
+        <div class="list"></div>
+        <div class="search">
+            <input type="text" placeholder="可输入姓名、电话、QQ、邮箱等" class="value">
+        </div>
+        <div class="add">
+            <button>+添加人员信息</button>
+        </div>
+        <div class="operation">
+            <button class="clear">清空</button>
+            <button class="startSearch">开始查询</button>
+        </div>
+        <!-- <div class="prompt">
+            <span></span>
+        </div> -->
+        <div class = "record">
+            <span class="statistical">本地浏览记录最近20条</span>
+        </div>
+        <div class = "footer">
+            <button class="allrecordClear">清空所有记录</button>
+        </div>
+    </div>
+</head>
+<body>
+    <script src="./fh-ui@2.2/js/lib/jquery/jquery.min.js"></script>
+    <script src="./fh-ui@2.2/js/fh-ui.min.js"></script>
+    <script id="infocard" type="text/html">
+        {{if isAdmin}}
+            <div class="card">
+                {{if type == "1"}}
+                <img src="./中/切图/1.jpg">
+                {{else if type == "2"}}
+                <img src="./中/切图/2.jpg">
+                {{else if type == "3"}}
+                <img src="./中/切图/3.jpg">
+                {{else if type == "4"}}
+                <img src="./中/切图/4.jpg">
+                {{/if}}
+                <div class="detailinfo">
+                    <span class="number">{{value}}</span>
+                </div>
+                <span class="close">x</span>
+            </div>
+        {{/if}}
+    </script>
+    <script id="statistical" type="text/html">
+        {{if isAdmin}}
+            {{each value as value i}}
+            <div class="card1">
+                <img src="./中/切图/1.jpg">
+                <div class="detailinfo">
+                    <span class="number">{{value}}</span>
+                </div>
+                <span class="addNumber"  data-phone = "{{value}}">+</span>
+            </div>
+            {{/each}}
+        {{/if}}
+    </script>
+    <script>
+        var value = ""
+        var type = ""
+        $(document).on('click', '.close',function(){
+            $this = $(this)
+            $this.closest('.card').remove()
+        })
+        $(document).on('click', '.clear',function(){
+            $('.card').remove()
+        })
+        $('.add').click(function(){
+            value = $('.value').val()
+            // 正则判断电话号码
+            if(/^1[3|4|5|8][0-9]\d{8}$/.test(value)){ 
+                type = "1"
+            } 
+            // 正则判断姓名
+            else if(/^[a-zA-Z\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/.test(value)){ 
+                type = "2"
+            } 
+            //  正则判断邮箱
+            else if(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){ 
+                type = "3"
+            } 
+             //  正则判断qq
+            else if (/^[1-9][0-9]{4,9}$/gim.test(value)){ 
+                type = "4"
+            } else {
+                Dialog.error("请输入正确的姓名、电话、QQ、邮箱等");
+                $(".value").val("");
+                retuen;
+            }
+            var data = {
+                value: value,
+                type: type,
+                isAdmin: true,
+            };
+            if (value.trim().length!=0) {
+                var html = template('infocard', data);
+                $(".list").append(html);
+                $(".value").val("");
+            }       
+        })
+        
+        var data1 = {
+                value: ["13476542783","14567898765","17690875433","19087659089","12355433456","19087986587"],
+                isAdmin: true,
+        };
+        var html = template('statistical', data1);
+        $(".record").append(html); 
+
+        $(document).on('click', '.allrecordClear',function(){
+            $('.card1').remove()
+        })
+
+        $(document).on('click', '.addNumber',function(){
+            $this = $(this)
+            var value = $this.data("phone")
+            console.log($this.data("phone"))
+            var data = {
+                value: value,
+                type: 1,
+                isAdmin: true,
+            };
+            var html = template('infocard', data);
+            $(".list").append(html);
+            $this.closest('.card1').remove()
+        })
+
+   </script>    
+</body>
+</html>
